@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.wx.order.OrderRepository">
+
+    <!-- 添加验证码信息. -->
+    <insert id="addCode" parameterType="Map">
+        INSERT INTO yy_yzm (
+            id
+            , openid
+            , sjh
+            , yzm
+            , cjsj
+            )
+            VALUES
+                (
+                #{id}
+                , #{openid}
+                , #{sjh}
+                , #{yzm}
+                , #{cjsj}
+                );
+    </insert>
+
+    <!-- 修改验证码信息. -->
+    <insert id="updateCode" parameterType="Map">
+        UPDATE yy_yzm SET
+            sjh =  #{sjh},
+            yzm = #{yzm},
+            cjsj = #{cjsj}
+        WHERE
+            openid = #{openid};
+    </insert>
+
+    <!-- 校验是否存在该用的的验证码.-->
+    <select id="openidQuery" resultType="int">
+       select count(1) from yy_yzm where openid=#{openid}
+    </select>
+
+    <!-- 查询计划-->
+    <select id="planQuery" resultType="Map" parameterType="String">
+       select id as id,kssj as starttime,jssj as endtime  from yy_yyjh where id=#{timeid}
+    </select>
+
+    <!-- 查询业务信息列表.-->
+    <select id="getBusiList" resultType="Map">
+        SELECT
+        id AS busiid
+        ,sort AS sort
+        ,content AS content
+        ,uname as businame
+        ,parent_id as fjid
+        FROM
+        yy_ywgl
+        WHERE
+        1 = 1
+        ORDER BY sort ASC
+    </select>
+
+    <!-- 查询业务信息列表.-->
+    <select id="busiSelectEnd" resultType="Map" parameterType="String">
+        SELECT
+             id AS busiid
+            ,content AS busitips
+            ,uname as businame
+        FROM
+            yy_ywgl
+        WHERE
+            id=#{busiid}
+    </select>
+
+    <!-- 获取上次短信信息. -->
+    <select id="getSmsInfo" parameterType="Map" resultType="Map">
+        SELECT
+             yzm
+            ,cjsj
+        FROM
+            yy_yzm
+        WHERE
+             openid = #{openid}
+         AND sjh = #{sjh}
+    </select>
+
+    <select id="getYycs" parameterType="Map" resultType="int">
+        SELECT
+            count(1) as cnt
+        FROM
+            yy_ls
+        WHERE
+             openid = #{openid}
+         AND #{enddate} >= yyrq
+         AND yyrq >= #{startdate}
+         AND sfgq = '1'
+    </select>
+
+</mapper>

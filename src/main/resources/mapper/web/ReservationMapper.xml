@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.wx.reservation.ReservationRepository">
+
+
+    <!-- 查询业务信息列表.-->
+    <select id="holidayQuery" resultType="int">
+        SELECT
+            count(1)
+        FROM
+            yy_jjr
+        where
+            rq=#{date}
+    </select>
+
+    <!-- 验证码校验.-->
+    <select id="getCode" resultType="Map" parameterType="String">
+	select id as id,openid as openid,sjh as sjh,yzm as yzm ,cjsj as cjsj  from yy_yzm where openid=#{openid}
+    </select>
+
+    <!-- 删除广告设备关联信息. -->
+    <delete id="delCode" parameterType="String">
+        DELETE
+        FROM
+            yy_yzm
+        WHERE
+            id = #{id};
+    </delete>
+
+    <!-- 根据日期查询是否预约.-->
+    <select id="subscribe" resultType="Map" parameterType="Map">
+        SELECT
+            yyjh.id AS timeid,
+            yyjh.kssj AS starttime,
+            yyjh.jssj AS endtime,
+            CASE
+                WHEN b.cnt IS null THEN '0'
+                ELSE b.cnt
+            END as cnt
+        FROM
+            yy_yyjh yyjh
+        LEFT JOIN (
+            SELECT
+                 ls.yykssj
+                ,count(1) as cnt
+            FROM
+                yy_ls ls
+            WHERE
+                 ls.sfgq = '0'
+             AND ls.sfqx = '0'
+             AND ls.sfqh = '0'
+             AND ls.yyrq = #{date}
+             AND ls.yylx = #{busitype}
+            GROUP BY
+                 ls.yykssj
+        ) b
+           ON b.yykssj = yyjh.kssj
+        ORDER BY
+            yyjh.kssj
+    </select>
+
+    <!-- 添加预约信息. -->
+    <insert id="addReservation" parameterType="Map">
+        INSERT INTO yy_ls (
+            id
+            ,openid
+            ,yyrq
+            ,yykssj
+            ,yylx
+            ,ywfl
+            ,yysjh
+            ,yyxm
+            ,yyid
+            ,yycp
+            ,sfqh
+            ,bz
+            ,qhsj
+            ,sfgq
+            ,yyjssj
+            ,ywfl2
+            ,sfqx
+        )
+        VALUES
+            (
+            #{id}
+            ,#{openid}
+            ,#{yyrq}
+            ,#{yykssj}
+            ,#{yylx}
+            ,#{ywfl}
+            ,#{yysjh}
+            ,#{yyxm}
+            ,#{yyid}
+            ,#{yycp}
+            ,#{sfqh}
+            ,#{bz}
+            ,#{qhsj}
+            ,#{sfgq}
+            ,#{yyjssj}
+            ,#{ywfl2}
+            ,#{sfqx}
+            );
+    </insert>
+
+    <!-- 查询该业务下是否存在子业务 -->
+    <select id="sublevel" resultType="int">
+        SELECT
+	        count( 1 )
+        FROM
+	        yy_ywgl
+        WHERE
+	        parent_id = #{fjid}
+    </select>
+
+    <!-- 修改业务信息. -->
+    <update id="updBusi" parameterType="Map">
+       UPDATE yy_ywgl SET
+            types = #{types}
+            ,sort = #{sort}
+            ,content = #{content}
+            ,uname = #{uname}
+            ,parent_id = #{fjid}
+        WHERE
+            id = #{id}
+            ;
+    </update>
+
+    <!-- 查询查询业务父级信息数量. -->
+    <select id="parentNumber" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ywgl
+        where
+            parent_id='0'
+    </select>
+
+    <!-- 查询查询业务子级信息数量. -->
+    <select id="sublevelNumber" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ywgl
+        where
+            parent_id!='0'
+    </select>
+
+    <!-- 查询查询业务子级信息数量. -->
+    <select id="nameQuery" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ywgl
+        where
+            uname=#{uname}
+    </select>
+
+    <!-- 删除业务信息. -->
+    <delete id="delBusi" parameterType="String">
+        DELETE
+        FROM
+            yy_ywgl
+        WHERE
+            id = #{id};
+    </delete>
+
+    <select id="checkSfyy" parameterType="Map" resultType="int">
+        SELECT
+            count(1) as cnt
+        FROM
+            yy_ls
+        WHERE
+             sfqx = '0'
+         AND yyrq = #{yyrq}
+         AND yykssj = #{yykssj}
+         AND yylx = #{yylx}
+         AND yyid = #{yyid}
+    </select>
+
+</mapper>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" th:href="@{../css/mui.min.css}">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" th:href="@{../css/view.css}">
+</head>
+<body style="background-color: white">
+    <div style="height: 90vh; overflow: auto">
+        <div class="select-title">请选择业务类型</div>
+        <div th:each="busi:${busilist}" class="yw-list">
+            <div th:text="${busi.businame}" class="top-yw-name"></div>
+            <div class="mui-row">
+                <div class="mui-col-xs-6 mui-col-sm-6 child-yw" th:each="childbusi:${busi.get('busilist')}">
+                    <div th:text="${childbusi.businame}" class="child-yw-name" th:attr="busiid=${childbusi.busiid}"></div>
+                    <i></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 10vh; width: 100%">
+        <button class="mui-btn mui-btn-success mui-btn-block btn-color" id="ywqr">确认</button>
+    </div>
+
+    <script th:src="@{../js/mui.min.js}"></script>
+    <script th:src="@{../js/mui.view.js}"></script>
+    <script th:src="@{../js/font-size.js}"></script>
+    <script th:src="@{../js/jquery.min.js}"></script>
+    <script>
+        mui.init({
+            swipeBack:true //启用右滑关闭功能
+        });
+        $(".child-yw").on("click", function(){
+            $(".selected").removeClass("selected")
+            $(this).toggleClass("selected")
+        })
+
+        $("#ywqr").on("click", function(){
+            var select = $(".selected");
+            if(select.length <= 0){
+                mui.alert("请选择要预约的业务", "提示", function(e){});
+                return;
+            }
+            var busiid = select.find(".child-yw-name").attr("busiid");
+            var businame = select.find(".child-yw-name").text();
+            var form = $('<form/>', {action : "/wx/busiselectend", method:"post", style:"display:none;"}).appendTo('body');
+            form.append('<input type="hidden" name="busiid" value="' + busiid + '"/>' );
+            form.append('<input type="hidden" name="businame" value="' + businame + '""/>' );
+            form.submit();
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+返回报文：
+{
+    "retcode": "0000/0004",
+    "retmsg": "成功/失败信息"
+}
+
+全局异常报文：
+{
+    "retcode": "9999",
+    "retmsg": "异常信息XXXXX"
+}
+
+----------------------------------------------
+1、用户登录
+ a)URL：/portal/login
+ b)请求报文：
+ {
+     "uid": "xxx",
+     "passwd": "xxxxx" //md5加密后的
+ }
+ c)返回报文:
+ {
+    "retcode": "",
+    "regmsg": "",
+    "uname": "用户姓名"
+ }
+
+2、修改密码
+ a)URL：/portal/chgpasswd
+ b)请求报文：
+ {
+     "uid": "xxx",
+     "oldpasswd": "xxxxx", // md5加密后的
+     "newpasswd1": "新密码"  // md5加密后的
+     "newpasswd2": "新密码"  // md5加密后的
+ }
+ c)返回报文:
+ {
+    "retcode": "",
+    "regmsg": ""
+ }
+----------------------------------------------
+1、用户管理-->查询用户列表
+ a)URL：/user/querylist
+ b)请求报文：
+  {
+      "uid": "xxx", // 查询条件，模糊查询
+      "uname": "用户姓名", // 查询条件，模糊查询
+      "startindex": "", // 分页查询中的开始条数
+      "pagesize": ""  // 分页查询中的每页显示多少条
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": "",
+     "cnt": "5",
+     "userinfo": [
+        {"id": "xxx", "uid": "xxx", "uname": "用户名"},
+        {"id": "xxx", "uid": "xxx", "uname": "用户名"},
+            ......
+        {"id": "xxx", "uid": "xxx", "uname": "用户名"}
+     ]
+  }
+
+2、用户管理-->新增用户
+ a)URL：/user/add
+ b)请求报文：
+  {
+      "uid": "xxx",
+      "uname": "用户姓名"
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": ""
+  }
+
+3、用户管理-->修改用户
+ a)URL：/user/modify
+ b)请求报文：
+  {
+      "uid": "用户id",
+      "uname": "用户姓名"
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": ""
+  }
+
+4、用户管理-->删除用户
+ a)URL：/user/delete
+ b)请求报文：
+  {
+      "uid": "用户id"
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": ""
+  }
+
+----------------------------------------------
+1、业务类型管理-->查询业务列表
+ a)URL：/busi/query
+ b)请求报文：
+  {
+      "uname": "业务名称", // 查询条件，模糊查询
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": "",
+     "busilist": [
+        {
+                    "fjid": "xxx",
+                    "types": "xxx",
+                    "uname": "xxx",
+                    "id": "xxx",
+                    "sort": "xxx",
+                    "content": "xxx"
+                },
+                {
+                     "fjid": "xxx",
+                     "types": "xxx",
+                     "uname": "xxx",
+                     "id": "xxx",
+                     "sort": "xxx",
+                     "content": "xxx"
+                },
+                {
+                     "fjid": "xxx",
+                     "types": "xxx",
+                     "uname": "xxx",
+                     "id": "xxx",
+                     "sort": "xxx",
+                     "content": "xxx"
+                }
+     ]
+  }
+
+2、业务类型管理-->新增业务
+ a)URL：/busi/add
+ b)请求报文：
+  {
+     "uname": "xxx",
+     "fjid": "xxx",
+     "sort": "xxx",
+     "content": "xxx",
+     "types":"xxx"
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": ""
+  }
+
+3、业务类型管理-->修改
+ a)URL：/busi/upd
+ b)请求报文：
+  {
+      "id":"业务id",
+      "uname": "xxx",
+      "fjid": "xxx",
+      "sort": "xxx",
+      "content": "xxx",
+      "types":"xxx"
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": ""
+  }
+
+4、业务类型管理-->删除
+ a)URL：/busi/del
+ b)请求报文：
+  {
+      "id": "业务id"
+  }
+  c)返回报文:
+  {
+     "retcode": "",
+     "regmsg": ""
+  }
+
+----------------------------------------------
+1、节假日管理-->初始化
+
+2、节假日管理-->查询
+ a)URL：/holiday/query
+ b)请求报文：
+  {
+      "rq": "",
+      "startindex": "", // 分页查询中的开始条数
+      "pagesize": ""  // 分页查询中的每页显示多少条
+  }
+  c)返回报文:
+  {
+      "holidays": [
+          {
+              "year": "2019",
+              "bz": "周末(自动生成)",
+              "id": "0e7d9b42d475478cbd89762828da927d",
+              "rq": "20190720"
+          }
+      ],
+      "year": "2019",
+      "cnt": 48,
+      "retmsg": "成功",
+      "retcode": "0000"
+  }
+
+3、节假日管理-->新增
+ a)URL：/holiday/add
+ b)请求报文：
+  {
+      "rq": ""
+  }
+  c)返回报文:
+  {
+      "retmsg": "成功",
+      "retcode": "0000"
+  }
+
+4、节假日管理-->修改
+ a)URL：/holiday/del
+ b)请求报文：
+  {
+      "id": "XXX"  // 查询列表中的主键
+  }
+  c)返回报文:
+  {
+      "retmsg": "成功",
+      "retcode": "0000"
+  }
+
+----------------------------------------------
+
+
+
+----------------------------------------------
+
+
+
+----------------------------------------------
+设备端微信预约取号接口：
+ a)URL：/wx/checkorder
+ b)请求报文：
+  {
+      "ywlx": "业务类型,0:车管业务, 1:违法处理"
+      "name": "身份证上的姓名",
+      "idnum": "身份证号"
+  }
+  c)返回报文:
+  {
+     "retcode": "0000/0004", // 0000:校验成功，可以取号
+     "regmsg": "异常信息",
+     "yy_tel": "预约手机号",
+     "yy_ywlx": "业务类型：车管业务/违法处理",
+     "yy_ywlx2": "车管业务具体名称",
+     "yy_sj": "预约时间"
+  }
+----------------------------------------------
+
+
+----------------------------------------------
+取消通知接口（在预约管理中）
+1.预约取消通知画面
+ 页面URL: /web/notice/cancel
+（1）获取通知内容
+    请求url:/web/notice/query
+    请求报文：
+    {
+    }
+    返回报文：
+    {
+         "retcode": "",
+         "regmsg": "",
+         "notice": "",       //当前的通知内容
+         "rq":""            //取消预约日期YYYY-MM-DD
+    }
+（2）修改通知内容
+    请求url:/web/notice/edit
+    请求报文：
+    {
+        "notice": "",       //通知内容
+        "rq":""            //取消预约日期YYYY-MM-DD
+    }
+    返回报文：
+    {
+         "retcode": "",
+         "regmsg": "",
+    }
+
+----------------------------------------------

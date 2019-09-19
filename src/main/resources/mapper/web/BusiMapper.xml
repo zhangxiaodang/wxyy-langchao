@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.web.busi.BusiRepository">
+
+
+    <!-- 查询业务信息列表.-->
+    <select id="getBusiList" resultType="Map" parameterType="Map">
+        SELECT
+             id AS id
+            ,sort AS sort
+            ,content AS content
+            ,uname as uname
+            ,parent_id as fjid
+        FROM
+            yy_ywgl
+        WHERE
+            1 = 1
+        <if test="uname != null and uname != ''">
+            AND uname = #{uname}
+        </if>
+        ORDER BY sort ASC
+    </select>
+
+    <!-- 查询业务单条信息.-->
+    <select id="getBusi" resultType="Map" parameterType="Map">
+        SELECT
+        id AS id
+        ,sort AS sort
+        ,content AS content
+        ,uname as uname
+        ,parent_id as fjid
+        FROM
+        yy_ywgl
+        WHERE
+        1 = 1
+        <if test="uname != null and uname != ''">
+            AND uname = #{uname}
+        </if>
+        ORDER BY sort ASC
+    </select>
+
+    <!-- 添加业务信息. -->
+    <insert id="addBusi" parameterType="Map">
+        INSERT INTO
+            yy_ywgl (
+                id
+                , sort
+                , content
+                , uname
+                , parent_id
+                 )
+        VALUES
+	            (
+	            #{id}
+	            ,#{sort}
+	            ,#{content}
+	            ,#{uname}
+	            ,#{fjid}
+	            );
+    </insert>
+
+    <!-- 查询该业务下是否存在子业务 -->
+    <select id="sublevel" resultType="int">
+        SELECT
+	        count( 1 )
+        FROM
+	        yy_ywgl
+        WHERE
+	        parent_id = #{fjid}
+    </select>
+
+    <!-- 修改业务信息. -->
+    <update id="updBusi" parameterType="Map">
+        UPDATE
+            yy_ywgl
+        SET
+             sort = #{sort}
+            ,content = #{content}
+            ,uname = #{uname}
+            ,parent_id = #{fjid}
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- 查询查询业务父级信息数量. -->
+    <select id="parentNumber" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ywgl
+        where
+            parent_id='0'
+    </select>
+
+    <!-- 查询查询业务子级信息数量. -->
+    <select id="sublevelNumber" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ywgl
+        where
+            parent_id!='0'
+    </select>
+
+    <!-- 查询查询业务子级信息数量. -->
+    <select id="nameQuery" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ywgl
+        where
+            uname=#{uname}
+    </select>
+
+    <!-- 删除业务信息. -->
+    <delete id="delBusi" parameterType="String">
+        DELETE
+        FROM
+            yy_ywgl
+        WHERE
+            id = #{id};
+    </delete>
+
+</mapper>

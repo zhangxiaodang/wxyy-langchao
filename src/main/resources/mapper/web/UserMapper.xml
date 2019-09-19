@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.web.user.UserRepository">
+
+    <!-- 查询用户列表 -->
+    <select id="getUserList" parameterType="Map"  resultType="Map">
+        SELECT
+             id
+            ,uid
+            ,uname
+        FROM
+            user_info
+        WHERE 1 = 1
+        <if test="uid!=null and uid!=''">
+            AND uid LIKE CONCAT('%',#{uid},'%')
+        </if>
+        <if test="uname!=null and uname!=''">
+            AND uname LIKE CONCAT('%',#{uname},'%')
+        </if>
+        ORDER BY uid
+        LIMIT #{startindex}, #{pagesize}
+    </select>
+
+    <!-- 查询用户列表条数 -->
+    <select id="getUserListCnt" parameterType="Map" resultType="int">
+        SELECT
+         count(1) as cnt
+        FROM
+            user_info
+        WHERE 1 = 1
+        <if test="uid!=null and uid!=''">
+            AND uid LIKE CONCAT('%',#{uid},'%')
+        </if>
+        <if test="uname!=null and uname!=''">
+            AND uname LIKE CONCAT('%',#{uname},'%')
+        </if>
+    </select>
+
+    <!-- 新增用户 -->
+    <insert id="add" parameterType="Map">
+        INSERT INTO
+            user_info(
+                 id
+                ,uid
+                ,uname
+                ,passwd
+            )
+        VALUES (
+             #{id}
+            ,#{uid}
+            ,#{uname}
+            ,#{passwd}
+        )
+    </insert>
+
+    <!-- 删除用户 -->
+    <delete id="del" parameterType="String">
+        DELETE
+        FROM
+            user_info
+        WHERE
+            uid = #{uid}
+    </delete>
+    
+    <update id="updUser" parameterType="Map">
+        UPDATE
+            user_info
+        SET
+            uname = #{uname}
+        WHERE
+            uid = #{uid}
+    </update>
+</mapper>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" th:href="@{../css/mui.min.css}">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" th:href="@{../css/mui.loading.css}">
+</head>
+<body>
+    <div class="mui-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell" th:each="order:${orderlist}">
+                <div class="order-content">
+                    <!--
+                    <div>预约号码：[ <span th:text="${order.ordernum}"></span> ]</div>
+                    -->
+                    <div>预约业务：<span th:text="${order.businame}"></span></div>
+                    <div th:text="${order.ordertime}"></div>
+                </div>
+                <div class="order-button">
+                    <button th:if="${order.status=='0'}" class="mui-btn mui-btn-success btn-color yy-btn-cancel" th:attr="data-id=${order.orderid}">取消预约</button>
+                    <div th:if="${order.status=='1'}">已取消</div>
+                    <div th:if="${order.status=='2'}">已取号</div>
+                    <div th:if="${order.status=='3'}">已过期</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script th:src="@{../js/mui.min.js}"></script>
+    <script th:src="@{../js/mui.loading.js}"></script>
+    <script th:src="@{../js/font-size.js}"></script>
+    <script th:src="@{../js/jquery.min.js}"></script>
+    <script th:inline="javascript">
+    </script>
+    <script>
+        mui.init({
+            swipeBack:true //启用右滑关闭功能
+        });
+
+        $(".yy-btn-cancel").on("click", function(e){
+            var data = {
+                orderid: $(this).attr("data-id"),
+                openid: '2'
+            };
+            mui.showLoading("正在加载中...", "div");
+            //ajax获取该日期下的预约时间
+            $.ajax({
+                type: "post",
+                contentType: "application/json",
+                async: true,
+                url: "/wx/ordercancel",
+                data: JSON.stringify(data),
+                dataType:"json",      //返回数据形式为json
+                success:function(result){
+                    mui.hideLoading();
+                    console.info("orderInfoSubmit:" + JSON.stringify(result));
+                    if(result.retcode == "0000") {
+                        // 预约取消成功
+                        var tips = "预约取消成功。";
+                        mui.alert(tips, "提示", function(e) {
+                            //location.reload();
+                        });
+                    } else {
+                        mui.alert("请重试", result.retmsg, function(e){});
+                    }
+                },
+                error:function(errorMsg){
+                    mui.hideLoading();
+                    console.info("orderInfoSubmit-error:"+ JSON.stringify(errorMsg));
+                    mui.alert("请重试", "预约取消失败", function(e){});
+                }
+            });
+        })
+    </script>
+</body>
+</html>

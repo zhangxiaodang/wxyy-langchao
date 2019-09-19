@@ -1,0 +1,266 @@
+html {font-size: 62.5%; /*10 ÷ 16 × 100% = 62.5%*/}
+body{
+    font-family:Microsoft Yahei, sans-serif!important;
+    background-color: white!important;
+}
+
+.top img{
+    width: 100%;
+    heigth: 40vh;
+}
+
+.bottom img{
+    width: 100%;
+    height: 25vh
+}
+
+.content{
+    height: 35vh;
+    text-align: center;
+}
+
+.content-big{
+    height: 60vh;
+    background-color: white;
+}
+
+.content > div{
+    padding-top: 0.4rem;
+}
+
+.yy-title{
+    color: #0553A5;
+    font-size: 0.26rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.yy-remark{
+    color: #000;
+    font-size: 0.1rem;
+    /*white-space: nowrap;*/
+    transform: scale(0.7,1);
+    line-height: 15px;
+}
+
+.yy-btn{
+    border-radius: 5px;
+    padding: 4px 13px;
+    font-size: 0.17rem;
+}
+
+.mui-input-row{
+    height: 0.45rem!important;
+}
+
+.mui-input-row input{
+    font-size: 0.16rem;
+    height: 0.45rem!important;
+}
+
+.mui-input-row label{
+    font-size: 0.16rem;
+    height: 0.45rem!important;
+    padding: 0.16rem 0.15rem!important;
+}
+
+.mui-button-row{
+    margin-top: 0.1rem;
+}
+
+.mui-input-group::after{
+    height: 0;
+}
+
+.yy-btn-submit{
+    border-radius: 5px;
+    font-size: 0.17rem;
+    padding: 6px 25px!important;
+    width: 70%!important;
+}
+
+.yy-btn-cancel{
+    border-radius: 5px;
+    font-size: 0.14rem;
+    padding: 6px 10px!important;
+}
+
+.btn-color{
+    background-color: #2CA347;
+    border: 1px solid #2CA347;
+}
+.yzm-btn{
+    border-radius: 5px;
+    float: left!important;
+    width: 26%!important;
+    padding: 8px 6px!important;
+    font-size: 0.12rem!important;
+    margin: 0.05rem 0;
+}
+
+.select-title{
+    margin-top: 0.1rem;
+    text-align: center;
+    font-size: 0.17rem;
+}
+
+.yw-list{
+    margin: 0.2rem 0.2rem 0.1rem 0.2rem;
+}
+
+.child-yw{
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 0.8rem;
+    width: 48%;
+    font-size: 0.14rem;
+    margin-top: 0.1rem;
+}
+
+.child-yw:nth-child(even){
+    margin-left: 0.1rem;
+}
+
+.child-yw-name{
+    display: table-cell;
+    width: inherit;
+    height: inherit;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+    word-break: normal;
+    padding: 0 10px;
+}
+
+.child-yw-name p{
+    margin-bottom: 0!important;
+    color:#000000;
+}
+.yy-time{
+    font-size:0.14rem;
+}
+
+.yy-time > div{
+    display: inline-block;
+    float: left;
+    padding: 0.1rem 0;
+    width: 12%;
+    cursor: pointer;
+    text-align: center;
+}
+
+.yy-week > div{
+    font-size:0.14rem;
+    color: #cccccc;
+    display: inline-block;
+    float: left;
+    width: 12%;
+    margin-top: 0.1rem;
+    text-align: center;
+}
+
+.yy-time .active{
+    height: 100%;
+    color: #ffffff;
+    background-color: #007aff;
+}
+.selected{
+    border: 1px solid #c00;
+}
+.selected i{
+    display: block;
+    position: absolute;
+    border-bottom: 0.16rem solid #c00;
+    border-left: 0.5rem solid transparent;
+    width: 0px;
+    height: 0px;
+    bottom: 0rem;
+    right: 0;
+}
+
+.selected i:after {
+    position: absolute;
+    content: '\2714';
+    color: #ffffff;
+    left: -0.2rem;
+    font-size: 0.2rem;
+}
+
+.mui-disabled, .mui-disabled p{
+    color: #cccccc!important;
+}
+
+.mui-content {
+    background-color: white;
+}
+
+.mui-content-padded {
+    text-align: center;
+}
+.mui-content-padded a {
+    margin: 3px;
+    width: 0.9rem;
+    height: 0.9rem;
+    display: inline-block;
+    text-align: center;
+    background-color: #2ac845;
+    border: 1px solid #ddd;
+    border-radius: 0.45rem;
+    background-clip: padding-box;
+}
+.mui-content-padded a .mui-icon {
+    margin-top: -0.18rem;
+    margin-left: -0.15rem;
+    font-size: 1.2rem;
+}
+.mui-spinner,
+.mui-spinner-white {
+    margin-top: 12px
+}
+.mui-content a {
+    color: white;
+}
+
+.order-result{
+    margin-top: 0.1rem;
+    color: #2ac845;
+    font-size: 0.22rem;
+    font-weight: bold
+}
+
+.order-content{
+    display: inline-block;
+    float:left;
+    font-size: 0.14rem;
+}
+
+.order-content > div{
+    color:#666;
+}
+
+.order-content > div:nth-child(1){
+    color:#2ac845;
+}
+
+.order-button{
+    display: inline-block;
+    float:right;
+    margin:0.1rem 0
+}
+
+.order-button div{
+    font-size: 0.14rem;
+}
+
+.mui-table-view-cell{
+    padding: 5px 15px
+}
+
+.bz-remark{
+    padding: 3px 10px 0;
+    font-size: 0.12rem;
+    transform: scale(1,1);
+    color:red;
+    line-height: 15px;
+}

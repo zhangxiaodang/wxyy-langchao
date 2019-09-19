@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" th:href="@{../css/mui.min.css}">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" th:href="@{../css/view.css}">
+    <link rel="stylesheet" th:href="@{../css/mui.loading.css}">
+</head>
+<body style="background-color: white">
+<div style="height: 90vh; overflow: auto">
+    <div class="select-title">请选择预约时间</div>
+    <div style="text-align: center">
+        <div class="mui-row yy-week">
+            <div th:each="date:${datelist}">
+                <div th:if="${date.status=='0'}" th:text="${date.weekday}" class="mui-disabled"></div>
+                <div th:if="${date.status=='1'}" th:text="${date.weekday}"></div>
+            </div>
+        </div>
+        <div class="mui-row yy-time">
+            <div th:each="date:${datelist}">
+                <div th:if="${date.status=='0'}" th:attr="data-date=${date.date}" class="mui-disabled">[[${#strings.substring(date.date,6,8)}]]</div>
+                <div th:if="${date.status=='1'}" th:attr="data-date=${date.date}">[[${#strings.substring(date.date,6,8)}]]</div>
+            </div>
+        </div>
+    </div>
+    <div class="mui-row yw-list" style="margin-top: 0">
+    </div>
+</div>
+
+<div style="height: 10vh; width: 100%">
+    <button class="mui-btn mui-btn-success mui-btn-block btn-color" id="sjqr">确认</button>
+</div>
+
+<script th:src="@{../js/mui.min.js}"></script>
+<script th:src="@{../js/mui.loading.js}"></script>
+<script th:src="@{../js/mui.view.js}"></script>
+<script th:src="@{../js/font-size.js}"></script>
+<script th:src="@{../js/jquery.min.js}"></script>
+<script th:src="@{../js/common.js}"></script>
+<script th:inline="javascript">
+    var datelist = [[${datelist}]];
+</script>
+<script>
+    mui.init({
+        swipeBack:true //启用右滑关闭功能
+    });
+    $(".yw-list").on("click", ".child-yw", function(){
+        //如果是不可用的，不能点击
+        if($(this).children("div").hasClass("mui-disabled")){
+            return;
+        }
+        $(".selected").removeClass("selected");
+        $(this).toggleClass("selected");
+    });
+
+    $("#sjqr").on("click", function(){
+        var select = $(".selected");
+        if(select.length <= 0){
+            mui.alert("请选择预约时间", "提示", function(e){});
+            return;
+        }
+        var timeid = select.find(".child-yw-name").attr("timeid");
+        var timerang = select.find("p:nth-child(1)").text();
+        var date = $(".yy-time > div.active").children("div").attr("data-date");
+        var form = $('<form/>', {action : "/wx/timeselectend", method:"post", style:"display:none;"}).appendTo('body');
+        form.append('<input type="hidden" name="timeid" value="' + timeid + '"/>' );
+        form.append('<input type="hidden" name="date" value="' + date + '"/>' );
+        form.submit();
+    });
+
+    $(document).ready(function(e){
+        //确定哪个active并且获取信息
+        for(var i=0; i<datelist.length; i++){
+            //第一个非节假日
+            if(datelist[i].status == "1"){
+                $(".yy-time").find('div[data-date=' + datelist[i].date + ']').trigger("click");
+                break;
+            }
+        }
+    });
+
+    $(".yy-time").on("click", " > div", function(){
+        //如果是不可用的，不能点击
+        if($(this).children("div").hasClass("mui-disabled")){
+            return;
+        }
+        $(this).siblings().removeClass("active")
+        $(this).toggleClass("active");
+        var date = $(this).children("div").attr("data-date");
+        getOrderTime(date);
+    });
+
+    function getOrderTime(date){
+        var busiType = localStorage.getItem("busitype");
+        var data = {
+            date: date,
+            busitype: busiType
+        };
+        mui.showLoading("正在加载中...", "div");
+        //ajax获取该日期下的预约时间
+        $.ajax({
+            type: "post",
+            contentType: "application/json",
+            async: true,
+            url: "/wx/getordertime",
+            data: JSON.stringify(data),
+            dataType:"json",      //返回数据形式为json
+            success:function(result){
+                mui.hideLoading();
+                console.info("getOrderTime:"+JSON.stringify(result));
+                if(result.retcode == "0000"){
+                    //预约时间列表做成
+                    orderTimeListMake(result.timelist);
+                }else{
+                    mui.alert("请重试", result.retmsg, function(e){});
+                }
+            },
+            error:function(errorMsg){
+                mui.hideLoading();
+                console.info("getOrderTime-error:"+ JSON.stringify(errorMsg));
+                mui.alert("请重试", "获取预约时间失败", function(e){});
+            }
+        });
+    }
+
+    function orderTimeListMake(list){
+        var str = "";
+        for(var i=0; i<list.length; i++){
+            var status = "空闲";
+            var cla = "";
+            if(list[i].status == "1") {
+                status = "约满";
+                cla = "mui-disabled"
+            }
+
+            if(list[i].status == "2") {
+                status = "已过期";
+                cla = "mui-disabled"
+            }
+            str += '<div class="mui-col-xs-6 mui-col-sm-6 child-yw"><div class="child-yw-name ' + cla + '" timeid=' + list[i].timeid + '>' +
+                    '<p>' + timeFormat(list[i].starttime) + '-' + timeFormat(list[i].endtime) + '(' + list[i].kyyrs + ')' +'</p>' +
+                    '<p>' + status + '</p></div><i></i></div>'
+        }
+        $(".yw-list").html(str);
+    }
+</script>
+</body>
+</html>

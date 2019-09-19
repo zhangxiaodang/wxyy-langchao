@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.web.portal.PortalRepository">
+
+    <!-- 获取用户信息登录验密码 -->
+    <select id="getUserInfo" parameterType="String" resultType="Map">
+        select
+             id
+            ,uid
+            ,uname
+            ,passwd
+        from user_info
+        where uid = #{uid}
+    </select>
+
+    <!-- 更新用户密码 -->
+    <update id="updPasswd" parameterType="Map">
+        update user_info
+        set
+            passwd = #{passwd}
+         where
+            uid= #{uid}
+    </update>
+
+    <!-- 获取当日预约人数-->
+    <select id="getDailyQuantity" parameterType="String" resultType="int">
+        select
+            count(1)
+        from
+            yy_ls
+        where
+            yyrq=#{yyrq}
+    </select>
+
+    <!-- 获取历史所有预约人数-->
+    <select id="getAllQuantity" resultType="int">
+        select
+            count(1)
+        from
+            yy_ls
+    </select>
+
+    <!-- 获取当日取号人数-->
+    <select id="getNumbering" parameterType="String" resultType="int">
+        SELECT
+	        count( 1 )
+        FROM
+            yy_ls
+        WHERE
+            yyrq = #{yyrq}
+        AND sfqh = '1'
+    </select>
+
+    <!-- 获取历史所有取号人数-->
+    <select id="getAllNumbering" resultType="int">
+        SELECT
+	        count( 1 )
+        FROM
+            yy_ls
+        WHERE
+            sfqh = '1'
+    </select>
+
+    <!-- 获取当日取消人数-->
+    <select id="getCancel" parameterType="String" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ls
+        WHERE
+            yyrq = #{yyrq}
+        AND sfqx = '1'
+    </select>
+
+    <!-- 获取历史所有取消人数-->
+    <select id="getAllCancel" parameterType="String" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ls
+        WHERE
+            sfqx = '1'
+    </select>
+
+    <!-- 获取当日超时人数-->
+    <select id="getOvertime" parameterType="String" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ls
+        WHERE
+            yyrq = #{yyrq}
+        AND sfgq = '1'
+    </select>
+
+    <!-- 获取历史所有超时人数-->
+    <select id="getAllOvertime" resultType="int">
+        SELECT
+            count( 1 )
+        FROM
+            yy_ls
+        WHERE
+            sfgq = '1'
+    </select>
+
+    <!-- 获取每天预约人数 -->
+    <select id="getCnt" parameterType="Map" resultType="Map">
+        SELECT
+             yyrq
+            ,count(1) as cnt
+        FROM
+            yy_ls
+        WHERE
+             yyrq &gt;= #{today}
+         AND yylx = #{yylx}
+         AND sfqx = '0'
+        GROUP BY
+            yyrq
+        ORDER BY
+            yyrq
+    </select>
+</mapper>

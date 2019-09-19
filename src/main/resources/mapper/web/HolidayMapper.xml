@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.web.holiday.HolidayRepository">
+
+    <!-- 节假日初始化 -->
+    <insert id="initData" parameterType="Map">
+        INSERT INTO
+            yy_jjr(
+                 id
+                ,year
+                ,rq
+                ,bz
+                ,lx
+            )
+        VALUES (
+             #{id}
+            ,#{year}
+            ,#{rq}
+            ,#{bz}
+            ,'01'
+        )
+    </insert>
+
+    <!-- 查询条数 -->
+    <select id="queryCnt" parameterType="Map" resultType="int">
+        SELECT
+            count(1) as cnt
+        FROM
+            yy_jjr
+        WHERE 1 = 1
+            AND year = #{year}
+        <if test="rq!=null and rq!=''">
+            AND rq = #{rq}
+        </if>
+    </select>
+
+    <!-- 查询一览 -->
+    <select id="queryList" parameterType="Map" resultType="Map">
+        SELECT
+             id
+            ,year
+            ,rq
+            ,bz
+        FROM
+            yy_jjr
+        WHERE 1 = 1
+            AND year = #{year}
+        <if test="rq!=null and rq!=''">
+            AND rq = #{rq}
+        </if>
+        ORDER BY rq
+        LIMIT #{startindex}, #{pagesize};
+    </select>
+
+    <!-- 新增 -->
+    <insert id="addData" parameterType="Map">
+        INSERT INTO
+            yy_jjr (
+                 id
+                ,year
+                ,rq
+                ,bz
+                ,lx
+            )
+        VALUES (
+             #{id}
+            ,#{year}
+            ,#{rq}
+            ,#{bz}
+            ,'02'
+        )
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="delData" parameterType="String">
+        DELETE FROM
+            yy_jjr
+        WHERE
+            id = #{id}
+    </delete>
+
+    <select id="checkData" parameterType="Map" resultType="Map">
+        SELECT
+            id
+        FROM
+            yy_jjr
+        WHERE
+             year = #{year}
+         AND rq = #{rq}
+    </select>
+
+    <!-- 是否是节假日 -->
+    <select id="isHoliday" parameterType="String" resultType="Integer">
+        SELECT
+            count(1) as cnt
+        FROM
+            yy_jjr
+        WHERE
+            rq = #{targetDate}
+    </select>
+
+</mapper>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="~{web/layout.html}"><!-- layout文件路径-->
+<head>
+    <title>浪潮集团微信预约系统</title>
+    <script th:src="@{../../assets/global/plugins/echarts/echarts.js}" type="text/javascript"></script>
+    <script th:src="@{../../assets/global/plugins/echarts/chart/bar.js}" type="text/javascript"></script>
+    <script th:src="@{../../assets/global/plugins/echarts/chart/line.js}" type="text/javascript"></script>
+    <script th:src="@{../../assets/global/plugins/echarts/chart/pie.js}" type="text/javascript"></script>
+    <script th:src="@{../../assets/pages/scripts/main.js}" type="text/javascript"></script>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="note note-success">
+            <i class="icon-ok green"></i>
+            欢迎使用
+            <strong class="green">
+                浪潮集团HR共享服务中心微信预约系统
+                <small>(v1.0)</small>
+            </strong>
+        </div>
+        <!--
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bar-chart font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">车驾管业务预约</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-comments"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="11" th:text="${cnt10}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date10}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-bar-chart-o"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt11}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date11}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt12}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date12}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt13}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date13}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 yellow" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt14}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date14}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt15}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date15}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bar-chart font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">违法业务预约</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-comments"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="11" th:text="${cnt20}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date20}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-bar-chart-o"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt21}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date21}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt22}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date22}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt23}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date23}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 yellow" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt24}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date24}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12" th:text="${cnt25}"></span>
+                                        </div>
+                                        <div class="desc">
+                                            <span th:text="${date25}"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bar-chart font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">当日预约合计</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-comments"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="1349" th:text="${dailyQuantity}"></span>
+                                        </div>
+                                        <div class="desc"> 当日预约人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-bar-chart-o"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12,5" th:text="${numbering}"></span>
+                                        </div>
+                                        <div class="desc"> 当日取号人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="549" th:text="${cancel}"></span>
+                                        </div>
+                                        <div class="desc"> 当日取消人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="89" th:text="${overtime}"></span>
+                                        </div>
+                                        <div class="desc"> 当日爽约人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bar-chart font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">历史预约合计</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-comments"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="1349" th:text="${allQuantity}"></span>
+                                        </div>
+                                        <div class="desc"> 历史预约人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-bar-chart-o"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="12,5" th:text="${allNumbering}"></span>
+                                        </div>
+                                        <div class="desc"> 历史取号人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="549" th:text="${allCancel}"></span>
+                                        </div>
+                                        <div class="desc"> 历史取消人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                                    <div class="visual">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            <span data-counter="counterup" data-value="89" th:text="${allOvertime}"></span>
+                                        </div>
+                                        <div class="desc"> 历史爽约人数 </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

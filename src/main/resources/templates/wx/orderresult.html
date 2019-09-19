@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" th:href="@{../css/mui.min.css}">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" th:href="@{../css/view.css}">
+</head>
+<body>
+<div class="top"><img th:src="@{../img/top.jpg}"></div>
+<div class="content-big">
+    <div class="mui-content">
+        <div class="mui-content-padded">
+            <a><span class="mui-icon mui-icon-checkmarkempty"></span></a>
+            <div class="order-result">预约成功</div>
+        </div>
+    </div>
+
+
+    <div style="padding: 0.1rem 0.1rem 0.4rem; line-height: 180%">
+        <ul style="list-style-type:decimal">
+            <li>请在预约时间10分钟前，凭身份证到办事大厅扫码取号，逾期作废。</li>
+            <li>如不能来办理，请取消预约</li>
+        </ul>
+    </div>
+    <div style="text-align: center">服务热线：<span id="phone">0532-86183660</span></div>
+</div>
+
+<script th:src="@{../js/mui.min.js}"></script>
+<script th:src="@{../js/mui.view.js}"></script>
+<script th:src="@{../js/font-size.js}"></script>
+<script th:src="@{../js/jquery.min.js}"></script>
+<script th:inline="javascript">
+</script>
+<script>
+    mui.init({
+        swipeBack:true //启用右滑关闭功能
+    });
+    $(document).ready(function(){
+        // 清空
+        localStorage.clear();
+
+        var busiType = localStorage.getItem("busitype");
+        if(busiType == "01") {
+            $("#phone").text("0532-86183660");
+        }else{
+            $("#phone").text("0532-55586664");
+        }
+    });
+</script>
+</body>
+</html>

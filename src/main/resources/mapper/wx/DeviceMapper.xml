@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.wx.device.DeviceRepository">
+
+    <!-- 取号 -->
+    <select id="getOrderInfo" parameterType="Map" resultType="Map">
+        SELECT
+             a.id
+            ,a.openid
+            ,a.yyxm
+            ,a.yysjh
+            ,b.uname as ywfl
+            ,a.yykssj
+            ,a.yyjssj
+            ,a.sfqh
+        FROM
+            yy_ls a
+        LEFT JOIN
+            yy_ywgl b
+         ON b.id = a.ywfl
+        WHERE
+              yyrq = #{yyrq}
+          AND yyid = #{yyid}
+          AND yylx = #{yylx}
+          AND sfqh = '0'
+          AND sfqx != '1'
+    </select>
+
+    <!-- 更新取号信息 -->
+    <update id="updOrderInfo" parameterType="Map">
+        UPDATE
+            yy_ls
+        SET
+            sfqh = #{sfqh}
+           ,qhsj = #{qhsj}
+        WHERE
+            id = #{id}
+    </update>
+
+    <update id="updTimeOut" parameterType="String">
+        UPDATE
+            yy_ls
+        SET
+            sfgq = '1'
+        WHERE
+            id = #{id}
+    </update>
+
+</mapper>

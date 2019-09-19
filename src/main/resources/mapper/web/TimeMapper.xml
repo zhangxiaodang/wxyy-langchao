@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.web.ordertime.TimeRepository">
+
+    <!-- 取得工作时间设置 -->
+    <select id="getGzsj" resultType="Map">
+        SELECT
+             id
+            ,a_kssj
+            ,a_jssj
+            ,p_kssj
+            ,p_jssj
+            ,jgsj
+            ,kyyrs
+        FROM
+            yy_gzsj
+    </select>
+    
+    <select id="getYysj" resultType="Map">
+        SELECT
+             id
+            ,kssj
+            ,jssj
+        FROM
+            yy_yyjh
+        ORDER BY
+            kssj
+    </select>
+
+    <delete id="delData" parameterType="String">
+        DELETE FROM
+            yy_yyjh
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!-- 删除开始时间和结束时间相同的流水 -->
+    <delete id="delYyls" parameterType="Map">
+        DELETE FROM
+            yy_ls
+        WHERE
+             yykssj = #{kssj}
+         AND yyjssj = #{jssj}
+         AND yyrq > #{rq}
+         AND openid is not null
+    </delete>
+
+    <!-- 更新工作时间表 -->
+    <update id="updGzsj" parameterType="Map">
+        UPDATE
+            yy_gzsj
+        SET
+             a_kssj = #{a_kssj}
+            ,a_jssj = #{a_jssj}
+            ,p_kssj = #{p_kssj}
+            ,p_jssj = #{p_jssj}
+            ,jgsj = #{jgsj}
+            ,kyyrs = #{kyyrs}
+    </update>
+
+    <delete id="truncateYysj">
+        DELETE FROM yy_yyjh
+    </delete>
+
+    <!-- 新增预约计划表 -->
+    <insert id="insYyjh" parameterType="Map">
+        INSERT INTO
+            yy_yyjh (
+                 id
+                ,kssj
+                ,jssj
+            )
+        VALUES (
+             #{id}
+            ,#{kssj}
+            ,#{jssj}
+        )
+    </insert>
+
+</mapper>

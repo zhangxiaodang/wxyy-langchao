@@ -1,0 +1,145 @@
+1.微信预约业务选择页面
+（1）外部提供的url, url给页面返回openid
+（2）跳转到页面： wx/orderselect
+（2）点击车管业务：不提交任何信息，直接跳页面 wx/infoinput
+（3）点击违法业务：不提交任何信息，直接跳页面 wx/infoinput
+
+
+2.预约信息输入画面
+ 页面URL: /wx/infoinput
+（1）获取验证码
+    请求url:/wx/getverify
+    请求报文：
+    {
+        "phone":xxxxxx
+    }
+    返回报文：
+    {
+         "retcode": "",
+         "regmsg": ""
+    }
+3.点击业务选择：
+ 提交url: /wx/busiselect
+ 跳转到的页面: wx/busiselect
+（1）需要给页面的数据
+    {
+        "busilist"：[
+            "busiid": xxxxx,      //业务ID
+            "businame": xxxxx,    //业务名称
+            "busilist": [         //子业务列表（如果没有子业务，就没有这个字段，可以多层嵌套）
+                {
+                    "busiid": xxxxx,      //业务ID
+                    "businame": xxxxx,    //业务内容
+                }
+            ]
+        ]
+    }
+（2）选中业务后点击确定，此时需要跳转页面
+    提交url: /wx/busiselectend
+    跳转到的页面：wx/infoinput
+    跳转页面后给页面的数据
+    {
+        "busiid": xxxxx,      //业务ID
+        "businame": xxxx,     //业务名称
+        "busitips": xxxx      //业务办理流程
+    }
+
+3.点击时间选择：
+ 提交url: /wx/timeselect
+ 跳转到页面url: wx/timeselect
+（1）需要给页面的数据日期list(从今天开始八天）
+    {
+        "datelist"：[
+            {
+                "date": xxxxx,      //日期，格式YYYYMMDD
+                "status": xxxxx,    //状态，1：平日；0：节假日
+                "weekday": xxxx     //周几，例如周一返回数据为一，周日返回数据为日
+                }
+        ]
+    }
+（2）点击日期后，获取该日期的预约时间段信息
+    请求url: /wx/getordertime
+    请求报文：
+    {
+        "date":xxxxxx,         //日期，格式：YYYYMMDD
+        "busitype":xxx         //预约类型， 0：车管业务，1：违法业务
+    }
+    返回报文：
+    {
+         "retcode": "",
+         "regmsg": "",
+         "timelist"[
+            {
+                "starttime":xxxx,    //开始时间HHMM
+                "endtime":xxxx,      //开始时间HHMM
+                "status":xxxx,       //是否约满 0：空闲，1：约满
+                "timeid":xxxx        //时间段id
+            }
+         ]
+    }
+
+（2）选中时间后点击确定，此时需要跳转页面
+    提交url: /wx/timeselectend
+    跳转到的页面：wx/infoinput
+    跳转页面后给页面的数据
+    {
+        "timeid": xxxxx,      //业务ID
+        "starttime": xxxx,    //业务名称
+        "endtime": xxxx      //业务办理流程
+    }
+
+3.预约信息输入画面按下确认
+（1）提交预约数据
+    请求url: /wx/orderconfirm
+    请求报文：
+    {
+        "phone":xxxxxx,          //手机号码
+        "verifycode":xxx,        //验证码
+        "username":xxx,          //姓名
+        "userid":xxx,            //身份证号
+        "busiid":xxx,            //业务类型（只在车管业务的时候存在）
+        "carnumber":xxx,         //车牌号（只在违法业务的时候存在）
+        "timeid":xxx,            //预约时间ID
+        "busitype":xxx           //业务类型（0：车管业务，1：违法业务）
+    }
+    返回报文：
+    {
+         "retcode": "",
+         "regmsg": ""
+    }
+（2）跳转到预约成功页面
+  页面url:/wx/orderresult
+  页面数据: 无
+
+4.预约信息查询
+  外部提供的url, url给页面返回openid
+  跳转到页面： wx/orderquery
+  {
+      "orderlist"：[
+          {
+            "ordernum": xxxx,      //预约的号码
+            "businame": xxxxx,     //预约的业务名
+            "status": xxxx,         //状态，0：正常，1：与取消，2：已取号
+            "ordertime": xxxx,      //预约业务的开始时间     YYYYMMDDHHMMSS
+            "orderid": xxxx         //预约id
+          }
+      ]
+  }
+
+
+
+5、设备端接口
+  请求URL： http://ssc.inspur.com/wx/checkorder
+  {
+      "ywlx": "01",        // 固定传01
+      "idnum": "xxx",      // 预约时填写的身份证号
+      "name": "xx"         // 预约时填写的姓名
+  }
+
+  返回信息:
+  {
+      "retcode": "0000/0004",     // 返回码：0000表示正常,0004表示有错误，9999表示系统异常
+      "retmsg": "消息",           // 返回消息
+      "yy_tel": "预约手机号"       // 预约时填写的手机号
+      "yy_ywlx": "预约业务名称"    // 预约的业务类型名称
+  }

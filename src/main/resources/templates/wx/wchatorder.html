@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>业务预约</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" th:href="@{../css/mui.min.css}">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+</head>
+<body>
+    <div style="height:100vh">
+        <div class="top"><img th:src="@{../img/top.jpg}"></div>
+        <div class="content">
+            <div style="padding-top: 25px;">
+                <div class="mui-row">
+                    <div class="mui-col-xs-7 mui-col-sm-7" style="text-align: left; padding-top: 5px; width: 60%">
+                        <span class="yy-title">&nbsp;&nbsp;&nbsp;&nbsp;车驾管业务预约</span>
+                    </div>
+                    <div class="mui-col-xs-5 mui-col-sm-5" style="width: 35%">
+                        <form action="/wx/infoinput" method="get">
+                            <button type="submit" class="mui-btn mui-btn-success btn-color yy-btn" id="cgyw">点击进入</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="mui-row" style="margin-top: 10px">
+                    <div class="mui-col-xs-12 mui-col-sm-12">
+                        <div class="yy-remark">温馨提示：预约成功后，请申请人持身份证明和相关材料到珠山路711号车管服务大厅抽取网上预约号码办理业务</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="mui-row">
+                    <div class="mui-col-xs-7 mui-col-sm-7" style="text-align: left; padding-top: 5px; width: 60%">
+                        <span class="yy-title">&nbsp;&nbsp;&nbsp;&nbsp;违法业务预约</span>
+                    </div>
+                    <div class="mui-col-xs-5 mui-col-sm-5" style="width: 35%">
+                            <button type="submit" class="mui-btn mui-btn-success btn-color yy-btn" id="wfyw">点击进入</button>
+                    </div>
+                </div>
+                <div class="mui-row" style="margin-top: 10px">
+                    <div class="mui-col-xs-12 mui-col-sm-12">
+                        <div class="yy-remark">温馨提示：预约成功后请凭身份证，驾驶证，行驶证等相关材料到珠山路711号违法处理大厅抽取网上预约号码办理业务</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <a href="https://map.baidu.com/mobile/webapp/place/linesearch/foo=bar/from=place&end=word%3D%25E9%259D%2592%25E5%25B2%259B%25E5%25B8%2582%25E5%2585%25AC%25E5%25AE%2589%25E5%25B1%2580%25E9%25BB%2584%25E5%25B2%259B%25E5%2588%2586%25E5%25B1%2580%25E4%25BA%25A4%25E9%2580%259A%25E8%25AD%25A6%25E5%25AF%259F%25E5%25A4%25A7%25E9%2598%259F%25E9%25BB%2584%25E5%25B2%259B%25E8%25BD%25A6%25E7%25AE%25A1%25E5%2588%2586%25E6%2589%2580%26point%3D13357672.49%252C4260620.63%26uid%3D23c3a3fdafe97247a3acc46b%26navi_x%3D13357637%26navi_y%3D4260617&tab=line">
+                <img th:src="@{../img/bottom.jpg}">
+            </a>
+        </div>
+    </div>
+
+    <script th:src="@{../js/mui.min.js}"></script>
+    <script th:src="@{../js/font-size.js}"></script>
+    <script th:src="@{../js/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        //微信的openid
+        var openid = [[${openid}]];
+    </script>
+    <script>
+        mui.init({
+            swipeBack:true //启用右滑关闭功能
+        });
+        $(document).ready(function(){
+            localStorage.clear();
+        });
+        $("#cgyw").on("click", function(){
+            localStorage.clear();
+            localStorage.setItem("openid", openid);
+            localStorage.setItem("busitype", "01");
+        })
+        $("#wfyw").on("click", function(){
+
+            var msg = "材料：\n";
+            msg = msg + "1、驾驶人本人携带行驶证、驾驶证、身份证（必须均为原件），外籍人员需携与驾驶证号码一致的护照原件；\n";
+            msg = msg + "2、出租车处理违法需要驾驶人本人携带行驶证、驾驶证、身份证，以及驾驶员的道路运输从业资格证，客运出租汽车服务资格证（必须均为原件）；\n";
+            msg = msg + "3、网络预约出租车处理违法需要驾驶人本人携带行驶证、驾驶证、身份证，以及网络预约出租汽车驾驶员证和网络预约出租汽车运输证（必须均为原件）；\n";
+            msg = msg + "4、大中型货运、客运车辆需要行驶证，驾驶证，身份证，以及驾驶员的道路运输从业资格证（必须均为原件)；";
+
+            mui.alert("", msg, function(e){
+                localStorage.clear();
+                localStorage.setItem("openid", openid);
+                localStorage.setItem("busitype", "02");
+
+                var form = $('<form />', {action : "/wx/infoinput", method:"get", style:"display:none;"}).appendTo('body');
+                form.submit();
+            });
+        })
+    </script>
+</body>
+</html>

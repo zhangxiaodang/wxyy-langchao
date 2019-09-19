@@ -1,0 +1,10 @@
+user_info：管理端用户信息表
+wx_user_info：微信用户信息表
+yy_bmwh：编码维护
+yy_gzsj：工作时间表
+yy_jjr：节假日表
+yy_ls：预约流水表
+yy_ywgl：业务分类管理表
+yy_yyjh：预约计划表
+yy_yysj：预约时间表
+yy_yzm：手机验证码表

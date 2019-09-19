@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" th:href="@{../css/mui.min.css}">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" th:href="@{../css/view.css}">
+    <link rel="stylesheet" th:href="@{../css/mui.loading.css}">
+</head>
+<style>
+    .mui-spinner {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        -webkit-transform-origin: 50%;
+        transform-origin: 50%;
+        -webkit-animation: spinner-spin 1s step-end infinite;
+        animation: spinner-spin 1s step-end infinite;
+        margin-top: 0!important;
+    }
+
+    .mui-spinner:after {
+        display: block;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-position: 50%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+</style>
+<body>
+    <div class="top"><img th:src="@{../img/cgtop.jpg}"></div>
+    <div class="content-big">
+        <form class="mui-input-group" id="infoform" action="">
+            <div class="mui-input-row">
+                <label>手机号码</label>
+                <input type="text" placeholder="请输入手机号码" style="width: 35%; float: left" maxlength="11" name="phone">
+
+                <!--
+                <button class="mui-btn mui-btn-success btn-color yzm-btn" data-loading-text = "发送中" id="getverify">获取验证码</button>
+                -->
+            </div>
+
+            <!--
+            <div class="mui-input-row">
+                <label>验证码</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入验证码" maxlength="4" name="verifycode">
+            </div>
+            -->
+            <div class="mui-input-row">
+                <label>姓名</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入真实姓名" maxlength="10" name="username">
+            </div>
+            <div class="mui-input-row">
+                <label>身份证号码</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入本人身份证号" maxlength="18" name="userid">
+            </div>
+            <div class="mui-input-row" id="pywlx">
+                <label>业务类型</label>
+                <input type="hidden" name="busiid">
+                <input type="text" class="mui-input-clear" placeholder="请选择业务类型" id="ywlx" readonly name="businame">
+            </div>
+            <div class="mui-input-row" id="pcphm">
+                <label>车牌号码</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入车牌号码" maxlength="10" name="carnumber">
+            </div>
+            <div class="mui-input-row">
+                <label>预约时间</label>
+                <input type="hidden" name="date">
+                <input type="text" class="mui-input-clear" placeholder="点击选择预约时间" id="yysj" readonly name="timerang">
+            </div>
+            <div class="mui-button-row" style="margin-top: 5px">
+                <button type="button" class="mui-btn mui-btn-success btn-color yy-btn-submit" id="tj">确 认 提 交</button>&nbsp;&nbsp;
+            </div>
+        </form>
+
+        <!--
+        <div id="weituo">
+            <div class="bz-remark">温馨提示：单位或个人需委托办理车驾管业务的，请下载打印并填写委托书，携带委托人身份证明、被委托人身份证明、委托书前来办理业务</div>
+            <div style="text-align: center; font-size: 0.14rem"><a th:href="@{#}" onClick="downPDF(this, 1);">单位委托书</a><a style="margin-left: 20px" th:href="@{#}" onClick="downPDF(this, 2);">个人委托书</a> </div>
+        </div>
+        -->
+    </div>
+
+    <script th:src="@{../js/mui.min.js}"></script>
+    <script th:src="@{../js/mui.loading.js}"></script>
+    <script th:src="@{../js/mui.view.js}"></script>
+    <script th:src="@{../js/font-size.js}"></script>
+    <script th:src="@{../js/jquery.min.js}"></script>
+    <script th:src="@{../js/form.js}"></script>
+    <script th:src="@{../js/common.js}"></script>
+    <script th:src="@{../js/infoinput.js}"></script>
+    <script th:inline="javascript">
+
+        if(localStorage.getItem("openid") == null) {
+            //微信的openid
+            var openid = [[${openid}]];
+            localStorage.setItem("openid", openid);
+            localStorage.setItem("busitype", "01");
+        }
+        // 业务类型
+        var business = [[${business}]];
+        // 时间
+        var time = [[${time}]];
+    </script>
+    <script>
+        mui.init({
+            swipeBack:true //启用右滑关闭功能
+        });
+    </script>
+</body>
+</html>

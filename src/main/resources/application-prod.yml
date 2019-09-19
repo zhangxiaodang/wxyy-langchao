@@ -1,0 +1,23 @@
+server:
+  port: 3300
+spring:
+  application:
+    name: wxyy
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.30.27.129:3306/wxyy?allowMultiQueries=true
+    username: wxyy
+    password: 123456a?
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    servlet:
+      content-type: text/html
+  mvc:
+    static-path-pattern: /**
+mybatis:
+  mapper-locations: classpath*:mapper/web/*.xml,mapper/wx/*.xml
+  configuration:
+    call-setters-on-nulls: true
+logging:
+  file: /home/wxyy/logs/wxyy.log

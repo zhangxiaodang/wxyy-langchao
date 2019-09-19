@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qd.wxyy.web.notice.NoticeRepository">
+
+    <select id="getMsg" resultType="String">
+        SELECT
+            msg
+        FROM
+            yy_msg
+    </select>
+
+    <update id="updMsg" parameterType="String">
+        UPDATE
+            yy_msg
+        SET
+            msg = #{content}
+    </update>
+    
+    <select id="isHoliday" parameterType="String" resultType="int">
+        SELECT
+            count(1) as cnt
+        FROM
+            yy_jjr
+        WHERE
+            rq = #{rq}
+    </select>
+
+    <select id="getYyls" parameterType="String" resultType="Map">
+        SELECT
+             id
+            ,openid
+        FROM
+            yy_ls
+        WHERE
+             yyrq = #{rq}
+         AND sfqx = "0"
+    </select>
+
+    <delete id="delYyls" parameterType="String">
+        DELETE FROM
+            yy_ls
+        WHERE
+             yyrq = #{rq}
+    </delete>
+</mapper>

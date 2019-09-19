@@ -1,0 +1,74 @@
+{
+    "button": [
+      {
+        "name": "福利放送",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "第一期福利",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI0NDUzNzU2MQ==&tempkey=MTAyNF9iOGlvSVZlMlZOaTN2ZmxkcFlzakdyYXVBSFJ6Ni11TDM3UFJBRkl2N2J3ZU02SUFiMkRpR0t3c2NEa1V3N3JqbXJ4Sl9EVTRlYmo0U1dNaWFsX0ZidEtxOFk4cnBoTTROVTc4ckhzZkNNTE9FTDZVZGRDNVZPTnRVVjFOOGZQOE1UVFUycnBaMHRvaG02OUtCa2Q1cnhkV2pPVGFRZ2Rfd19vNXp3fn4%3D&chksm=695d03805e2a8a9671d83df6f607341d7d587321fd3b609e97f918cad77779fa57aba527b8a0#rd"
+          },
+          {
+            "type": "view",
+            "name": "第二期福利",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI0NDUzNzU2MQ==&tempkey=MTAyNF9RV2ovQTNnMXlpZ0txVlZ2cFlzakdyYXVBSFJ6Ni11TDM3UFJBRkl2N2J3ZU02SUFiMkRpR0t3c2NEa3ZlOHBxVUZKQUhMVkJsdENLS2tCTG1CU3JXb0Z6X0dsS1ZTVWZQNFkyTG5RUTV3UlNLVHJ2LXlfOUt1YnNMV05VLWluRXc2blZzLTg2bGNBZHMyOW9EdkQwTlRvRm95Q0tyRFc2ZmpOQ1lBfn4%3D&chksm=695d03f35e2a8ae5174a40a91b3bf001d9e4715a74dbe2cb059fe16cf19c1efc46125d7cfe6e#rd"
+          }
+        ]
+      },
+      {
+        "name": "业务办理",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "离职查询",
+            "url": "http://shenpi2ssc.inspur.com"
+          },
+          {
+            "type": "view",
+            "name": "入职助手",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI0NDUzNzU2MQ==&tempkey=MTAyNF80c25iYWk5S2MyTGFKRlJLcFlzakdyYXVBSFJ6Ni11TDM3UFJBRkl2N2J3ZU02SUFiMkRpR0t3c2NEbDJwYWtPcUNXaUpERTdRd0VaVnpVLTdjUG00MHZmNTNubV9udTBVZWNCR3lBRzdRcFhfWTQ0OElDeDRTTTgwMFJKOERBaDJsVlVUZFRsdkEwMnhMdW90SFdhM0RJOThZUWx0YVpGb0k4Y3V3fn4%3D&chksm=695d00985e2a898eb142ab0beeb4c8fc7e943f8b08618b76f01a8a72064f52f84234719dde36#rd"
+          },
+          {
+            "type": "view",
+            "name": "预约取号",
+            "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa6028f3364fae093&redirect_uri=http%3a%2f%2fssc.inspur.com%2fwx%2finfoinput&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+          },
+          {
+              "type": "view",
+              "name": "预约查询",
+              "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa6028f3364fae093&redirect_uri=http%3a%2f%2fssc.inspur.com%2fwx%2fquery&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+          }
+        ]
+      },
+      {
+        "name": "更多资讯",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "新人攻略",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI0NDUzNzU2MQ==&tempkey=MTAyNF83elJZMmUwdDJlcjFNajJacFlzakdyYXVBSFJ6Ni11TDM3UFJBRkl2N2J3ZU02SUFiMkRpR0t3c2NEbTBnQl9vYXUzSFdHUEp6c0xoTmN1bDN6MDY4eV9jMFVOMGRoOFdINTVBZmJESmVlaUJkMkU3dGRKczQ1bXJpcmJ6Q01qS3J3R2I0cUtMOU5hREdaX2E5RUY3QUhWQlVIRlFnaUctR2pwRjhBfn4%3D&#rd"
+          }
+        ]
+      }
+    ]
+}
+
+
+预约：
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa6028f3364fae093&redirect_uri=http://ssc.inspur.com/wx/infoinput&response_type=code&scope=snsapi_base&state=123#wechat_redirect
+
+查询：
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa6028f3364fae093&redirect_uri=http://ssc.inspur.com/wx/query&response_type=code&scope=snsapi_base&state=123#wechat_redirect
+
+
+http://ssc.inspur.com/wxyy/authentication
+
+221.214.76.97
+
+http://ssc.inspur.com/web/portal
+
+
+
+浪潮集团HR共享服务中心
+
+
