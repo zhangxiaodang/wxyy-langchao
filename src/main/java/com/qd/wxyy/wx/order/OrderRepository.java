@@ -55,4 +55,9 @@ public interface OrderRepository {
      * 查询三个月内爽约次数.
      */
     int getYycs(Map<String, String> param);
+
+    /**
+     * 根据openid获取用户信息.
+     */
+    Map<String, String> getWxUserInfo(String openid);
 }

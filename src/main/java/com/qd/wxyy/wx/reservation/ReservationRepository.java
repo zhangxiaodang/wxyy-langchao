@@ -40,4 +40,14 @@ public interface ReservationRepository {
      * 该身份证号是否预约过.
      */
     int checkSfyy(Map<String, String> param);
+
+    /**
+     * 根据openid查询该用户是否存在.
+     */
+    int getWxUserCnt(String openid);
+
+    /**
+     * 新增微信用户信息表.
+     */
+    void insertWxUserInfo(Map<String, String> param);
 }

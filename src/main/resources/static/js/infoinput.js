@@ -36,6 +36,20 @@ $(document).ready(function(){
         orderInfo.date = time.date;
         orderInfo.timerang = timeFormat(time.starttime) + "-" + timeFormat(time.endtime);
     }
+
+    if(yyxm != "" && yyxm != null) {
+        orderInfo.username = yyxm;
+        localStorage.setItem("username", yyxm);
+    }
+    if(yysjh != "" && yysjh != null) {
+        orderInfo.phone = yysjh;
+        localStorage.setItem("phone", yysjh);
+    }
+    if(yyid != "" && yyid != null) {
+        orderInfo.userid = yyid;
+        localStorage.setItem("userid", yyid);
+    }
+
     var options = { jsonValue: orderInfo, exclude:[],isDebug: false};
     $("#infoform").initForm(options);
 });

@@ -93,4 +93,15 @@
          AND sfgq = '1'
     </select>
 
+    <select id="getWxUserInfo" parameterType="String" resultType="Map">
+        SELECT
+             openid
+            ,yyxm
+            ,yyid
+            ,yysjh
+        FROM
+            wx_user_info
+        WHERE
+            openid = #{openid}
+    </select>
 </mapper>

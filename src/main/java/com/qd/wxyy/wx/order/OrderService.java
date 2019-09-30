@@ -234,4 +234,30 @@ public class OrderService {
         // 返回
         return result;
     }
+
+    /**
+     * 根据opendid取得微信用户预约时的手机号、身份证号和姓名.
+     */
+    public String getWxUserInfo(String openid) {
+
+        String userInfo = "";
+
+        try {
+            Map<String, String> userInfoMap = this.orderRepository.getWxUserInfo(openid);
+            log.info("获取的微信用户信息为：{}", userInfoMap);
+
+            if(!userInfoMap.get("yyxm").equals(null)) {
+                JSONObject json = new JSONObject();
+                json.put("yyxm", userInfoMap.get("yyxm"));
+                json.put("yyid", userInfoMap.get("yyid"));
+                json.put("yysjh", userInfoMap.get("yysjh"));
+                userInfo = json.toJSONString();
+            }
+        }catch (Exception ex) {
+            log.error("取得微信用户信息时异常：" + ex.getMessage());
+        }
+
+        // 返回
+        return userInfo;
+    }
 }

@@ -178,4 +178,28 @@
          AND yyid = #{yyid}
     </select>
 
+    <select id="getWxUserCnt" parameterType="String" resultType="int">
+        SELECT
+            count(1) as cnt
+        FROM
+            wx_user_info
+        WHERE
+            openid = #{openid}
+    </select>
+
+    <insert id="insertWxUserInfo" parameterType="Map">
+        INSERT INTO wx_user_info (
+             id
+            ,openid
+            ,yyxm
+            ,yyid
+            ,yysjh
+        ) VALUES (
+             #{id}
+            ,#{openid}
+            ,#{yyxm}
+            ,#{yyid}
+            ,#{yysjh}
+        )
+    </insert>
 </mapper>

@@ -22,20 +22,20 @@ public class OrderController {
     /**
      * 业务预约主页.
      */
-    @RequestMapping(value = "/index")
-    public String index(HttpServletRequest request, Model model) throws Exception {
-
-        String authCode = request.getParameter("code");
-        log.info("微信获取的code:" + authCode);
-
-        String openid = orderService.getOpenId(authCode);
-        log.info("获取的openid为{}", openid);
-        //String openid = "123";
-        model.addAttribute("openid", openid);
-
-        // 黄岛交警业务预约主页
-        return "wx/wchatorder";
-    }
+//    @RequestMapping(value = "/index")
+//    public String index(HttpServletRequest request, Model model) throws Exception {
+//
+//        String authCode = request.getParameter("code");
+//        log.info("微信获取的code:" + authCode);
+//
+//        String openid = orderService.getOpenId(authCode);
+//        log.info("获取的openid为{}", openid);
+//        //String openid = "123";
+//        model.addAttribute("openid", openid);
+//
+//        // 黄岛交警业务预约主页
+//        return "wx/wchatorder";
+//    }
 
     /**
      * 跳转到信息输入页面.
@@ -48,7 +48,20 @@ public class OrderController {
 
         String openid = orderService.getOpenId(authCode);
         log.info("获取的openid为{}", openid);
-        //String openid = "123";
+        //String openid = "o2bZjwYzyqVCcIKlIMyzvM-PeZeQ";
+
+        // 获取上次预约成功后保存的手机号、姓名、身份证号
+        String userInfo = this.orderService.getWxUserInfo(openid);
+        if(!userInfo.equals("")) {
+            model.addAttribute("yyxm", JSONObject.parseObject(userInfo).getString("yyxm"));
+            model.addAttribute("yyid", JSONObject.parseObject(userInfo).getString("yyid"));
+            model.addAttribute("yysjh", JSONObject.parseObject(userInfo).getString("yysjh"));
+        } else {
+            model.addAttribute("yyxm", "");
+            model.addAttribute("yyid", "");
+            model.addAttribute("yysjh", "");
+        }
+
         model.addAttribute("openid", openid);
 
         // 浪潮返回业务预约主页
@@ -108,7 +121,7 @@ public class OrderController {
     /**
      * 获取当日预约数量
      */
-    @RequestMapping(value = "dailyquantity", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/dailyquantity", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String dailyQuantity(@RequestBody String request) throws Exception {
 

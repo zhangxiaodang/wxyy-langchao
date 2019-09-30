@@ -6,6 +6,7 @@ import com.qd.wxyy.util.CommonUtil;
 import com.qd.wxyy.util.DateTimeUtil;
 import com.qd.wxyy.web.ordertime.TimeRepository;
 import com.qd.wxyy.wx.order.OrderService;
+import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,7 +90,22 @@ public class ReservationService {
 //            return new SysErrorRsp("0004", "验证码过期或输入错误").toJsonString();
 //        }
 
+        // 增加一条预约记录
         this.reservationRepository.addReservation(paramMap);
+
+        // 判断该微信用户是否预约过,如果没有则保存用户信息(手机号、姓名、身份证)
+        int cnt = this.reservationRepository.getWxUserCnt(requestData.getString("openid"));
+        // 没有时保存用户信息
+        if(cnt == 0) {
+            Map<String, String> paramMap1 = new HashMap<>();
+            paramMap1.put("id", CommonUtil.getUUid());
+            paramMap1.put("openid", requestData.getString("openid"));
+            paramMap1.put("yysjh", requestData.getString("phone"));
+            paramMap1.put("yyxm", requestData.getString("username"));
+            paramMap1.put("yyid", requestData.getString("userid"));
+            this.reservationRepository.insertWxUserInfo(paramMap1);
+        }
+
         // 返回
         return new SysErrorRsp("0000", "预约成功").toJsonString();
     }
