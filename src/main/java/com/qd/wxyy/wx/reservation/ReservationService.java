@@ -6,13 +6,11 @@ import com.qd.wxyy.util.CommonUtil;
 import com.qd.wxyy.util.DateTimeUtil;
 import com.qd.wxyy.web.ordertime.TimeRepository;
 import com.qd.wxyy.wx.order.OrderService;
-import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -95,8 +93,9 @@ public class ReservationService {
 
         // 判断该微信用户是否预约过,如果没有则保存用户信息(手机号、姓名、身份证)
         int cnt = this.reservationRepository.getWxUserCnt(requestData.getString("openid"));
+        log.info("保存微信用户{}的查询结果为{}", requestData.getString("openid"), cnt);
         // 没有时保存用户信息
-        if(cnt == 0) {
+        if (cnt == 0) {
             Map<String, String> paramMap1 = new HashMap<>();
             paramMap1.put("id", CommonUtil.getUUid());
             paramMap1.put("openid", requestData.getString("openid"));
