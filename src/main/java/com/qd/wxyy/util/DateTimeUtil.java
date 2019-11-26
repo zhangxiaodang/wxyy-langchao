@@ -34,6 +34,8 @@ public class DateTimeUtil {
      */
     public final static String FORMAT_YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
+    public final static String FORMAT_YYYYMMDD2 = "yyyy年MM月dd日";
+
     /**
      * 获取当前4位年.
      */
@@ -48,6 +50,13 @@ public class DateTimeUtil {
 
         Date currentDate = new Date();
         SimpleDateFormat df = new SimpleDateFormat(FORMAT_YYYYMMDD);
+        return df.format(currentDate);
+    }
+
+    public static String getCurrentDate2() {
+
+        Date currentDate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat(FORMAT_YYYYMMDD2);
         return df.format(currentDate);
     }
 

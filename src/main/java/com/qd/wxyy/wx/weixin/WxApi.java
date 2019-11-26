@@ -49,7 +49,7 @@ public class WxApi {
     }
 
     /**
-     * 发图文字消息.
+     * 发文字消息.
      */
     public boolean sendTextMsg(String accessToken, String userOpenid, String content) {
 
