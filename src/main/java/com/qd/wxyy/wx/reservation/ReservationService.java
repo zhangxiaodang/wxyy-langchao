@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.qd.wxyy.core.SysErrorRsp;
 import com.qd.wxyy.util.CommonUtil;
 import com.qd.wxyy.util.DateTimeUtil;
-import com.qd.wxyy.util.StringFormat;
 import com.qd.wxyy.web.ordertime.TimeRepository;
 import com.qd.wxyy.wx.order.OrderService;
 import com.qd.wxyy.wx.weixin.WxApi;
@@ -112,10 +111,12 @@ public class ReservationService {
         // 获取微信订阅号accessToken
         String accessToken = api.getAccessToken();
         // 消息
-        String notice = "您好，您已经预约成功。请于{0}{1}-{2}到浪潮集团HR共享服务中心(s05楼南一层)取号办理{3}业务。一人一票，过号无效；请留意窗口叫号";
-        notice = StringFormat.format(notice, DateTimeUtil.getCurrentDate2(), "1", "2", requestData.getString("busitype"));
+        StringBuilder notice = new StringBuilder();
+        notice.append("您好，您已经预约成功。请于" + DateTimeUtil.getCurrentDate2() + requestData.getString("timerang"));
+        notice.append("到浪潮集团HR共享服务中心(s05楼南一层)取号办理" + requestData.getString("businame"));
+        notice.append("业务。一人一票，过号无效；请留意窗口叫号");
         // 发送消息
-        api.sendTextMsg(accessToken, requestData.getString("openid"), notice);
+        api.sendTextMsg(accessToken, requestData.getString("openid"), notice.toString());
 
         // 返回
         return new SysErrorRsp("0000", "预约成功").toJsonString();
