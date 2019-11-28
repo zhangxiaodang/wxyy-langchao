@@ -30,6 +30,11 @@ public class DateTimeUtil {
     public final static String FORMAT_HHMMSS = "HHmmss";
 
     /**
+     * 时间格式化.
+     */
+    public final static String FORMAT_HHMM = "HHmm";
+
+    /**
      * 保存时间格式化.
      */
     public final static String FORMAT_YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
@@ -64,6 +69,13 @@ public class DateTimeUtil {
 
         Date currentDate = new Date();
         SimpleDateFormat df = new SimpleDateFormat(FORMAT_HHMMSS);
+        return df.format(currentDate);
+    }
+
+    public static String getCurrentTime2() {
+
+        Date currentDate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat(FORMAT_HHMM);
         return df.format(currentDate);
     }
 
@@ -243,5 +255,26 @@ public class DateTimeUtil {
         cal.add(Calendar.DATE, days);
 
         return df.format(cal.getTime());
+    }
+
+    /**
+     * 从指定时间加减分钟.
+     * @param bTime 基准时间，格式9999
+     *
+     * @param minutes 分钟
+     */
+    public static String stepMinutes(String bTime, int minutes) throws Exception {
+
+        DateFormat df = new SimpleDateFormat("HHmm");
+        Date bdate = df.parse(bTime);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(bdate);
+        cal.add(Calendar.MINUTE, minutes);
+
+        return df.format(cal.getTime());
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(stepMinutes("0900", 30));
     }
 }

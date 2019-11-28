@@ -22,4 +22,20 @@
          AND sfgq = '0'
     </update>
 
+    <select id="getOrderList" parameterType="Map" resultType="Map">
+        SELECT
+             openid
+            ,yyxm
+            ,ywfl2
+            ,yykssj
+            ,yyjssj
+        FROM
+            yy_ls
+        WHERE
+             yyrq = #{yyrq}
+         AND sfqx = '0'
+         AND sfgq = '0'
+         AND yykssj > #{currenttime}
+    </select>
+
 </mapper>
