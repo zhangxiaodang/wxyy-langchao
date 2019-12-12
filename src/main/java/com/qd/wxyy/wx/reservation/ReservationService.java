@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qd.wxyy.core.SysErrorRsp;
 import com.qd.wxyy.util.CommonUtil;
 import com.qd.wxyy.util.DateTimeUtil;
+import com.qd.wxyy.web.crontab.AccessTokenBean;
 import com.qd.wxyy.web.ordertime.TimeRepository;
 import com.qd.wxyy.wx.order.OrderService;
 import com.qd.wxyy.wx.weixin.WxApi;
@@ -18,6 +19,9 @@ import java.util.*;
 @Slf4j
 @Service
 public class ReservationService {
+
+    @Autowired
+    private AccessTokenBean accessTokenBean;
 
     @Autowired
     private OrderService orderService;
@@ -108,15 +112,14 @@ public class ReservationService {
 
         // 发送信息
         WxApi api = new WxApi();
-        // 获取微信订阅号accessToken
-        String accessToken = api.getAccessToken();
+
         // 消息
         StringBuilder notice = new StringBuilder();
         notice.append("您好，您已经预约成功。请于" + DateTimeUtil.getCurrentDate2() + requestData.getString("timerang"));
         notice.append("到浪潮集团HR共享服务中心(s05楼南一层)取号办理" + requestData.getString("businame"));
         notice.append("业务。一人一票，过号无效；请留意窗口叫号");
         // 发送消息
-        api.sendTextMsg(accessToken, requestData.getString("openid"), notice.toString());
+        api.sendTextMsg(accessTokenBean.getAccessToken(), requestData.getString("openid"), notice.toString());
 
         // 返回
         return new SysErrorRsp("0000", "预约成功").toJsonString();

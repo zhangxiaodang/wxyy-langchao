@@ -1,6 +1,7 @@
 package com.qd.wxyy.web.crontab;
 
 import com.qd.wxyy.util.DateTimeUtil;
+import com.qd.wxyy.util.SpringUtil;
 import com.qd.wxyy.wx.weixin.WxApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ import java.util.Map;
 @Slf4j
 @Component
 public class CrontabService {
+
+    @Autowired
+    private AccessTokenBean accessTokenBean;
 
     @Autowired
     private CrontabRepository crontabRepository;
@@ -61,14 +65,10 @@ public class CrontabService {
             param.put("currenttime", currentTime);
             List<Map<String, String>> orderList = this.crontabRepository.getOrderList(param);
             log.info("共有{}人需要通知", orderList.size());
-            // 发送信息
-            WxApi api = new WxApi();
-            // 获取微信订阅号accessToken
-            String accessToken = api.getAccessToken();
-            log.info("获取的accessToken为:{}", accessToken);
 
             orderList.forEach(
                     orderInof -> {
+                        log.info(">>>>>>>>>>预约开始时间：{}", orderInof.get("yykssj"));
                         try {
                             if (DateTimeUtil.stepMinutes(currentTime, 30).equals(orderInof.get("yykssj"))) {
                                 StringBuilder msg = new StringBuilder();
@@ -84,6 +84,10 @@ public class CrontabService {
                                 msg.append("温馨提示：\n");
                                 msg.append("一人一票，过号无效；请留意窗口叫号\n");
 
+                                // 送消息
+                                WxApi api = new WxApi();
+                                String accessToken = this.accessTokenBean.getAccessToken();
+                                log.info("获取的accessToken为:{}", accessToken);
                                 api.sendTextMsg(accessToken, orderInof.get("openid"), msg.toString());
                                 log.info("姓名[{}],openid[{}]已通知，信息为{}", orderInof.get("yyxm"), orderInof.get("openid"), msg.toString());
                             }
@@ -98,5 +102,24 @@ public class CrontabService {
         } catch (Exception ex) {
             log.info("30分钟提前提醒定时任务异常结束，异常信息：{}", ex.getMessage());
         }
+    }
+
+    /**
+     * 每90分钟执行一次.
+     */
+    @Scheduled(fixedDelay = 90 * 60 * 1000)
+    public void getAccessToken() {
+        log.info("定时任务获取access token开始........................");
+        try {
+            // 发送信息
+            WxApi api = new WxApi();
+            // 获取微信订阅号accessToken
+            String accessToken = api.getAccessToken();
+            log.info("定时任务获取的access token为{}", accessToken);
+            SpringUtil.getBean(AccessTokenBean.class).setAccessToken(accessToken);
+        } catch (Exception ex) {
+            log.error("获取access token时异常:" + ex.getMessage());
+        }
+        log.info("定时任务获取access token结束........................");
     }
 }
