@@ -48,8 +48,8 @@ public class ReservationController {
      * 查询未来8天的时间.
      */
     @RequestMapping(value = "/timeselect", produces = "application/json;charset=UTF-8")
-    public String timeselect(Model model) throws Exception {
-        List<Map<String, Object>> datelist = this.reservationService.timeSelect();
+    public String timeselect(Model model, String busiid) throws Exception {
+        List<Map<String, Object>> datelist = this.reservationService.timeSelect(busiid);
         log.info("预约时间查询结果为{}", datelist);
         model.addAttribute("datelist", datelist);
         return "wx/timeselect";

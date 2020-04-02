@@ -130,7 +130,7 @@ public class ReservationService {
      *
      * @return
      */
-    public List<Map<String, Object>> timeSelect() {
+    public List<Map<String, Object>> timeSelect(String busiid) {
 
         // 定义日期格式
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
@@ -148,13 +148,28 @@ public class ReservationService {
             treeData.put("date", df.format(getDateAfter(new Date(), i)));
             // 星期几
             //treeData.put("weekday", weekdays);
-            treeData.put("weekday", DateTimeUtil.dateToWeek(df.format(getDateAfter(new Date(), i))));
+            String weekDay = DateTimeUtil.dateToWeek(df.format(getDateAfter(new Date(), i)));
+            treeData.put("weekday", weekDay);
 
+            // 不是假期
             if (holiday == 0) {
                 treeData.put("status", "1");
             } else {
+                // 是假期不可用
                 treeData.put("status", "0");
             }
+
+            // ADD BY zhangxd ON 20200402 START
+            // 入职手续办理业务只在周二可预约
+            if (busiid.equals("c02f13f0b54b41f0ac3ff2777281dff3")) {
+                if (weekDay == "二") {
+                    treeData.put("status", "1");
+                } else {
+                    treeData.put("status", "0");
+                }
+            }
+            // ADD BY zhangxd ON 20200402 END
+
             treeDatas.add(treeData);
         }
         return treeDatas;

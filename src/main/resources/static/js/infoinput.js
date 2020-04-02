@@ -71,6 +71,7 @@ $("#yysj").on("click", function(){
     var busiType = localStorage.getItem("busitype");
     var form = $('<form />', {action : "/wx/timeselect", method:"post", style:"display:none;"}).appendTo('body');
     form.append('<input type="hidden" name="busitype" value="' + busiType + '"/>' );
+    form.append('<input type="hidden" name="busiid" value="' + orderInfo.busiid + '"/>' );
     form.submit();
 });
 
