@@ -34,7 +34,7 @@ $(document).ready(function(){
     }
     if(time != "" && time != null){
         orderInfo.date = time.date;
-        orderInfo.timerang = timeFormat(time.starttime) + "-" + timeFormat(time.endtime);
+        orderInfo.timerang = dateFormat(time.date) + " " + timeFormat(time.starttime) + "-" + timeFormat(time.endtime);
     }
 
     if(yyxm != "" && yyxm != null) {
@@ -346,4 +346,9 @@ function downPDF(obj, id){
     form.action = href;
     document.getElementsByTagName('body')[0].appendChild(form);
     form.submit();
+}
+
+
+function dateFormat(date){
+    return date.substring(0, 4) + "年" + date.substring(4, 6) + "月" + date.substring(6, 8) + "日";
 }
